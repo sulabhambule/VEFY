@@ -1,9 +1,8 @@
-import express from 'express';
-import { marked } from 'marked';
-import cors from 'cors';
+import express from "express";
+import { marked } from "marked";
+import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import 'dotenv/config'; // Load environment variables from .env file
-
+import "dotenv/config"; // Load environment variables from .env file
 
 const app = express();
 const PORT = 3001;
@@ -41,7 +40,6 @@ const PORT = 3001;
 //   }
 // };
 
-
 // Enable CORS for all routes
 app.use(cors());
 
@@ -65,8 +63,6 @@ app.get("/recipestream", (req, res) => {
     res.send(response);
   };
 
-  
-
   const prompt = [];
   prompt.push("Generate a recipe that incorporates the following details:");
   prompt.push(`[Ingredients: ${ingredients}]`);
@@ -74,8 +70,8 @@ app.get("/recipestream", (req, res) => {
   prompt.push(`[Cuisine Preference: ${cuisine}]`);
   prompt.push(`[Cooking Time: ${cookingTime}]`);
   prompt.push(`[Complexity: ${complexity}]`);
-  prompt.push()
-  
+  prompt.push();
+
   prompt.push(
     "Please provide a detailed recipe, including steps for preparation and cooking. Only use the ingredients provided."
   );
@@ -87,27 +83,37 @@ app.get("/recipestream", (req, res) => {
   );
 
   run(prompt, sendEvent);
-  console.log("hello")
+  console.log("hello");
 
   req.on("close", () => {
     res.end();
   });
 });
 
-const API_KEY = "AIzaSyADdSAZRsaN0ClL6BcDFc5OlUU0Wk4c21Y"; 
-const genAI = new GoogleGenerativeAI('AIzaSyADdSAZRsaN0ClL6BcDFc5OlUU0Wk4c21Y');
+const API_KEY = "AIzaSyADdSAZRsaN0ClL6BcDFc5OlUU0Wk4c21Y";
+const genAI = new GoogleGenerativeAI("AIzaSyADdSAZRsaN0ClL6BcDFc5OlUU0Wk4c21Y");
 
 async function run(prompt, callback) {
   try {
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash-latest",
+    });
     const result = await model.generateContent(prompt);
-    
+
     const response = result.response;
-    if (response && response.candidates && response.candidates[0] && response.candidates[0].content && response.candidates[0].content.parts) {
-      const generatedText = marked(response.candidates[0].content.parts.map(part => part.text).join("\n"));
+    if (
+      response &&
+      response.candidates &&
+      response.candidates[0] &&
+      response.candidates[0].content &&
+      response.candidates[0].content.parts
+    ) {
+      const generatedText = marked(
+        response.candidates[0].content.parts.map((part) => part.text).join("\n")
+      );
       console.log("Generated Text:", generatedText);
-      callback(generatedText);  // Send the generated text to the client
+      callback(generatedText); // Send the generated text to the client
     } else {
       console.log("No valid response structure found.");
     }

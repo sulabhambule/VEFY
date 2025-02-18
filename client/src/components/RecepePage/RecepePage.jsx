@@ -128,12 +128,14 @@ function Recipes() {
   let eventSourceRef = useRef(null);
 
   useEffect(() => {
-    closeEventStream(); // Close any existing connection
+    closeEventStream();
+    // Close any existing connection
   }, []);
 
   useEffect(() => {
     if (recipeData) {
-      closeEventStream(); // Close any existing connection
+      closeEventStream();
+      // Close any existing connection
       initializeEventStream();
       console.log("hello4"); // Open a new connection
     }

@@ -63,7 +63,8 @@ const Profile = () => {
       };
 
       if (userDoc.exists()) {
-        await setDoc(userDocRef, data, { merge: true }); // Merge updates existing fields without overwriting the entire document
+        await setDoc(userDocRef, data, { merge: true }); 
+        // Merge updates existing fields without overwriting the entire document
         toast.success("Details updated successfully!");
       } else {
         await setDoc(userDocRef, data);
@@ -87,11 +88,12 @@ const Profile = () => {
         const userDoc = await getDoc(userDocRef);
 
         const data = {
-          Allergies: updatedAllergies, // Use the updated list here
+          Allergies: updatedAllergies,
         };
 
         if (userDoc.exists()) {
-          await setDoc(userDocRef, data, { merge: true }); // Merge updates existing fields without overwriting the entire document
+          await setDoc(userDocRef, data, { merge: true });
+          // Merge updates existing fields without overwriting the entire document
           toast.success("Details updated successfully!");
         } else {
           await setDoc(userDocRef, data);
@@ -104,7 +106,8 @@ const Profile = () => {
     }
   };
   const handleAddChronicDisease = async (disease) => {
-    const updatedChronicDiseases = [...chronicDiseases, disease]; // Create the updated list here
+    const updatedChronicDiseases = [...chronicDiseases, disease];
+    // Create the updated list here
     setChronicDiseases(updatedChronicDiseases);
     setDropdownVisible(false);
 
@@ -113,11 +116,12 @@ const Profile = () => {
       const userDoc = await getDoc(userDocRef);
 
       const data = {
-        ChronicDiseases: updatedChronicDiseases, // Use the updated list here
+        ChronicDiseases: updatedChronicDiseases,
       };
 
       if (userDoc.exists()) {
-        await setDoc(userDocRef, data, { merge: true }); // Merge updates existing fields without overwriting the entire document
+        await setDoc(userDocRef, data, { merge: true });
+        // Merge updates existing fields without overwriting the entire document
         toast.success("Details updated successfully!");
       } else {
         await setDoc(userDocRef, data);
@@ -135,7 +139,8 @@ const Profile = () => {
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
-        await setDoc(userDocRef, newData, { merge: true }); // Merge updates existing fields without overwriting the entire document
+        await setDoc(userDocRef, newData, { merge: true });
+         // Merge updates existing fields without overwriting the entire document
         toast.success("Details updated successfully!");
       } else {
         await setDoc(userDocRef, newData);
